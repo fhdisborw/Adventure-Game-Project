@@ -1,32 +1,24 @@
 #Game Funcitons
 #Finn Disbrow
-#This file contains two functions
-#one that calculates how many items a player can purchase based on their money and the item price, 
-#and another that generates a random monster with specific attributes.
-
+import random
 
 #Purchase Item Function
-itemspurchased = 0
 def purchase_item(itemPrice, startingMoney, quantitytoPurchase=1):
-    affordable = startingMoney // itemPrice
-    itemspurchased = min(affordable, quantitytoPurchase)
-    remainingMoney = startingMoney - (itemspurchased * itemPrice)
-    return itemspurchased, remainingMoney
+    """This funciton calculates how many items a player can purchase based on the item price, 
+    the player's starting money, and the quantity available to purchase. It returns the 
+    number of items purchased and the remaining money."""
+    itemspurchased = 0
+    affordable = startingMoney // itemPrice #Calculation of number of items that can be afforded with starting money
+    itemspurchased = min(affordable, quantitytoPurchase) #Calculation of number of items that can be purchased
+    remainingMoney = startingMoney - (itemspurchased * itemPrice) #Calculation of remaining money after purchase
+    return itemspurchased, remainingMoney #Return of number of items purchased and remaining money after purchase
 
-itemspurchased, remainingMoney = purchase_item(50, 100, 3)
-print(itemspurchased, remainingMoney)
-
-itemspurchased, remainingMoney = purchase_item(50, 25, 5)
-print(itemspurchased, remainingMoney)
-
-itemspurchased, remainingMoney = purchase_item(50, 100)
-print(itemspurchased, remainingMoney)
-
-
-#Random Monster Function
-import random
+#Random Monster Funciton
 def new_random_monster():
-    monsters = [
+    """This funciton generates a random monster with a name, description, health, power, and money.
+    It uses a predefined list that contains the possible monsters and their attributes, 
+    and returns a dictionary with the randomly generated monster's attributes."""
+    monsters = [ #List of possible monsters with their attributes
         {"name" : "Goblin",
         "description" : "A small goblin snarls and charges at you.",
         "health_min": 2,
@@ -51,30 +43,25 @@ def new_random_monster():
         "power_max": 15,
         "money_min": 5,
         "money_max": 100}]
-    m = random.choice(monsters)
-    return {
+    m = random.choice(monsters) #Assignment of random monster from list to variable m
+    return { #Return of dictionary with randomly generated monster's attributes
     "name": m["name"],
     "description": m["description"],
     "health": random.randint(m["health_min"], m["health_max"]),
     "power": random.randint(m["power_min"], m["power_max"]),
     "money": random.randint(m["money_min"], m["money_max"])}
 
-print(new_random_monster())
-print(new_random_monster())
-print(new_random_monster())
-
 #Documentation and Strings
-
-def print_welcome(name, width): #Function to output welcome message,
-    greeting = f"Hello, {name}" #takes name and width as parameters
-    return print(f"{greeting:^{width}}")
-#Calling Function
-print_welcome("Finn", 15)
-print_welcome("King Charles", 28)
-print_welcome("Ricky Bobby", 37)
+def print_welcome(name, width):
+    """This funciton takes name and width as parameters
+    and prints a welcome message centered within the specified width."""
+    greeting = f"Hello, {name}" #Creation of greeting string using name parameter
+    return print(f"{greeting:^{width}}") #Return of formatted print statement formatted for the width parameter
 
 #Print Shop Menu
 def print_shop_menu(item1name, item1price, item2name, item2price):
+    """This function takes the names and prices of two items as parameters 
+    and prints a formatted menu of the items with their prices."""
     top_border = "/"+("-" * 20)+"\\"    #Border Formatting
     bottom_border = "\\"+("-" * 20)+"/"
     
@@ -84,9 +71,27 @@ def print_shop_menu(item1name, item1price, item2name, item2price):
     formatitem2price = f"${item2price:.2f}"
     itemline2 = f"|{item2name:<12}{formatitem2price:>8}|" #Formatted item2 line
     itemsdetails = f"{itemline1}\n{itemline2}"
-    return print(f"{top_border}\n{itemsdetails}\n{bottom_border}") #returns menu of items
+    return print(f"{top_border}\n{itemsdetails}\n{bottom_border}") #returns formatted menu of items
+
+#Purchase Item Function Call
+itemspurchased, remainingMoney = purchase_item(50, 100, 3)
+print(itemspurchased, remainingMoney)
+itemspurchased, remainingMoney = purchase_item(50, 25, 5)
+print(itemspurchased, remainingMoney)
+itemspurchased, remainingMoney = purchase_item(50, 100)
+print(itemspurchased, remainingMoney)
+
+#Random Monster Function Calll
+print(new_random_monster())
+print(new_random_monster())
+print(new_random_monster())
 
 #Calling Function
+print_welcome("Finn", 15)
+print_welcome("King Charles", 28)
+print_welcome("Ricky Bobby", 37)
+
+#Print Shop Menu Call
 print_shop_menu("Fishing Rod", 250, "Flys", 2.5075)
 print_shop_menu("Tacos", 5.75, "Burritos", 7.1234)
 print_shop_menu("Shoes", 158, "Socks", 22.754)
