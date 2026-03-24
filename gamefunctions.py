@@ -1,12 +1,43 @@
-#Game Funcitons
-#Finn Disbrow
+"""Functions for gameplay; including purchasing items, generating
+random monsters, and printing formatted text for menus and greetings.
+
+This module provides functions used throughout the game. It includes
+logic for determining how many items a player can afford, creating random
+monsters with given parameters, and printing formatted output such as welcome
+messages and shop menus. These functions support gameplay and
+simplify repeated formatting tasks.
+
+Typical usage example:
+
+    items, money = purchase_item(50, 100, 3)
+    monster = new_random_monster()
+    print_welcome("Finn", 20)
+    print_shop_menu("Sword", 150, "Shield", 90)
+"""
+
 import random
 
 #Purchase Item Function
 def purchase_item(itemPrice, startingMoney, quantitytoPurchase=1):
-    """This funciton calculates how many items a player can purchase based on the item price, 
-    the player's starting money, and the quantity available to purchase. It returns the 
-    number of items purchased and the remaining money."""
+    """
+    Calculate how many items a player can purchase.
+
+    Parameters:
+        itemPrice (int): The cost of a single item.
+        startingMoney (int): The amount of money the player has.
+        quantityToPurchase (int): The maximum number of items the
+            player is allowed to buy. Defaults to 1.
+
+    Returns:
+        tuple: A tuple containing:
+            - int: The number of items purchased.
+            - int: The remaining money after the purchase.
+
+    Example:
+        >>> purchase_item(50, 100, 3)
+        (2, 0)
+    """
+
     itemspurchased = 0
     affordable = startingMoney // itemPrice #Calculation of number of items that can be afforded with starting money
     itemspurchased = min(affordable, quantitytoPurchase) #Calculation of number of items that can be purchased
@@ -15,9 +46,31 @@ def purchase_item(itemPrice, startingMoney, quantitytoPurchase=1):
 
 #Random Monster Funciton
 def new_random_monster():
-    """This funciton generates a random monster with a name, description, health, power, and money.
-    It uses a predefined list that contains the possible monsters and their attributes, 
-    and returns a dictionary with the randomly generated monster's attributes."""
+    """
+    Generate a random monster with random attributes.
+
+    This function selects a monster from a list of possible
+    monsters. Each monster type includes ranges for health, power, and
+    money. The function randomly generates a monster within those ranges
+    and returns a dictionary describing the monster.
+
+    Parameters:
+        None
+
+    Returns:
+        A dictionary containing:
+            - name (str): The monster's name.
+            - description (str): A short description of the monster.
+            - health (int): Randomized health value.
+            - power (int): Randomized power value.
+            - money (int): Randomized amount of money dropped.
+
+    Example:
+        >>> monster = new_random_monster()
+        >>> print(monster["name"])
+        Goblin
+    """
+
     monsters = [ #List of possible monsters with their attributes
         {"name" : "Goblin",
         "description" : "A small goblin snarls and charges at you.",
@@ -53,15 +106,51 @@ def new_random_monster():
 
 #Documentation and Strings
 def print_welcome(name, width):
-    """This funciton takes name and width as parameters
-    and prints a welcome message centered within the specified width."""
+    """
+    Print a centered welcome message.
+
+    This function takes a player's name and a desired width, then prints
+    a welcome message centered within that width.
+
+    Parameters:
+        name (str): The player's name to include in the greeting.
+        width (int): The total width used to center the message.
+
+    Returns:
+        None
+
+    Example:
+        >>> print_welcome("Finn", 15)
+           Hello, Finn
+    """
+
     greeting = f"Hello, {name}" #Creation of greeting string using name parameter
     return print(f"{greeting:^{width}}") #Return of formatted print statement formatted for the width parameter
 
 #Print Shop Menu
 def print_shop_menu(item1name, item1price, item2name, item2price):
-    """This function takes the names and prices of two items as parameters 
-    and prints a formatted menu of the items with their prices."""
+    """
+    Print a formatted shop menu displaying two items and their prices.
+
+    This function takes the names and prices of two items and prints a
+    formatted menu showing each item aligned with its price.
+
+    Parameters:
+        item1name (str): The name of the first item.
+        item1price (float): The price of the first item.
+        item2name (str): The name of the second item.
+        item2price (float): The price of the second item.
+    
+    Returns:
+        Formatted print output of the shop menu.
+
+    Example:
+        >>> print_shop_menu("Tacos", 5.75, "Burritos", 7.12)
+        /--------------------\
+        |Burritos       $7.12|
+        \--------------------/
+    """
+
     top_border = "/"+("-" * 20)+"\\"    #Border Formatting
     bottom_border = "\\"+("-" * 20)+"/"
     
@@ -86,7 +175,7 @@ print(new_random_monster())
 print(new_random_monster())
 print(new_random_monster())
 
-#Calling Function
+#Print Welcome Function Call
 print_welcome("Finn", 15)
 print_welcome("King Charles", 28)
 print_welcome("Ricky Bobby", 37)
@@ -95,3 +184,20 @@ print_welcome("Ricky Bobby", 37)
 print_shop_menu("Fishing Rod", 250, "Flys", 2.5075)
 print_shop_menu("Tacos", 5.75, "Burritos", 7.1234)
 print_shop_menu("Shoes", 158, "Socks", 22.754)
+
+#Test Funciton
+def test_functions():
+    # Test purchase_item
+    print(purchase_item(50, 100, 3))
+
+    # Test new_random_monster
+    print(new_random_monster())
+
+    # Test print_welcome
+    print_welcome("Finn", 20)
+
+    # Test print_shop_menu
+    print_shop_menu("Sword", 150, "Shield", 90)
+
+if __name__ == "__main__":
+    test_functions()
