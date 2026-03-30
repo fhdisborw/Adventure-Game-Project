@@ -104,6 +104,39 @@ def new_random_monster():
     "power": random.randint(m["power_min"], m["power_max"]),
     "money": random.randint(m["money_min"], m["money_max"])}
 
+#Monster Game Actions
+def displayfightstatistics(player_hp, monster):
+    print(f"\nYour HP: {player_hp}")
+    print(f"{monster['name']} HP: {monster['health']}\n")
+def getUserFightAction(): 
+    print("What will you do?")
+    print("1) Attack")
+    print("2) Run Away")
+    if input("1 or 2? >") not in ["1", "2"]:
+        print("\nInvalid choice.\n")
+        return getUserFightAction()
+    return input("1 or 2? >")
+def do_fight_action(action, player_hp, player_gold, monster):
+    if action == "1":
+        dmg_m = random.randint(5, 15)
+        dmg_p = random.randint(0, monster["power"])
+
+        monster["health"] -= dmg_m
+        player_hp -= dmg_p
+
+        print(f"\nYou deal {dmg_m} damage to the {monster['name']}.")
+        print(f"The {monster['name']} deals {dmg_p} damage to you.\n")
+
+        return player_hp, player_gold, monster["health"] <= 0, player_hp <= 0
+
+    elif action == "2":
+        print("\nYou run away safely.\n")
+        return player_hp, player_gold, False, False
+
+    else:
+        print("\nInvalid choice.\n")
+        return player_hp, player_gold, False, False
+
 #Documentation and Strings
 def print_welcome(name, width):
     """
@@ -129,7 +162,7 @@ def print_welcome(name, width):
 
 #Print Shop Menu
 def print_shop_menu(item1name, item1price, item2name, item2price):
-    """
+    r"""
     Print a formatted shop menu displaying two items and their prices.
 
     This function takes the names and prices of two items and prints a
@@ -144,6 +177,7 @@ def print_shop_menu(item1name, item1price, item2name, item2price):
     Returns:
         Formatted print output of the shop menu.
 
+    
     Example:
         >>> print_shop_menu("Tacos", 5.75, "Burritos", 7.12)
         /--------------------\
@@ -162,42 +196,18 @@ def print_shop_menu(item1name, item1price, item2name, item2price):
     itemsdetails = f"{itemline1}\n{itemline2}"
     return print(f"{top_border}\n{itemsdetails}\n{bottom_border}") #returns formatted menu of items
 
-#Purchase Item Function Call
-itemspurchased, remainingMoney = purchase_item(50, 100, 3)
-print(itemspurchased, remainingMoney)
-itemspurchased, remainingMoney = purchase_item(50, 25, 5)
-print(itemspurchased, remainingMoney)
-itemspurchased, remainingMoney = purchase_item(50, 100)
-print(itemspurchased, remainingMoney)
-
-#Random Monster Function Calll
-print(new_random_monster())
-print(new_random_monster())
-print(new_random_monster())
-
-#Print Welcome Function Call
-print_welcome("Finn", 15)
-print_welcome("King Charles", 28)
-print_welcome("Ricky Bobby", 37)
-
-#Print Shop Menu Call
-print_shop_menu("Fishing Rod", 250, "Flys", 2.5075)
-print_shop_menu("Tacos", 5.75, "Burritos", 7.1234)
-print_shop_menu("Shoes", 158, "Socks", 22.754)
-
 #Test Funciton
-def test_functions():
+if (__name__ == "__main__"):
+    def test_functions():
     # Test purchase_item
-    print(purchase_item(50, 100, 3))
+        print(purchase_item(50, 100, 3))
 
     # Test new_random_monster
-    print(new_random_monster())
+        print(new_random_monster())
 
     # Test print_welcome
-    print_welcome("Finn", 20)
+        print_welcome("Finn", 20)
 
     # Test print_shop_menu
-    print_shop_menu("Sword", 150, "Shield", 90)
+        print_shop_menu("Sword", 150, "Shield", 90)
 
-if __name__ == "__main__":
-    test_functions()
